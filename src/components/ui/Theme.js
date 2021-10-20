@@ -18,7 +18,7 @@ export default createTheme({
 	},
 	typography: {
 		tab: {
-			fontFamily: 'Raleway',
+			fontFamily: 'Noto Sans Mono',
 			textTransform: 'none',
 			fontWeight: 900,
 			fontSize: '1rem',
