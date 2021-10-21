@@ -17,22 +17,25 @@ function App() {
 				<Header />
 				<Switch>
 					<Route path="/" exact component={() => <div>Home</div>} />
-					<Route path="/services" exact component={() => <div>Services</div>} />
+					<Route path="/services" component={() => <div>Services</div>} />
 					<Route
 						path="/revolution"
-						exact
 						component={() => <div>The Revolution</div>}
 					/>
+					<Route path="/contact" component={() => <div>Contact Us</div>} />
+					<Route path="/about" component={() => <div>About Us</div>} />
+					<Route path="/estimate" component={() => <div>Free Estimate</div>} />
 					<Route
-						path="/contact"
-						exact
-						component={() => <div>Contact Us</div>}
+						path="/customsoftware"
+						component={() => <div>Custome Software</div>}
 					/>
-					<Route path="/about" exact component={() => <div>About Us</div>} />
 					<Route
-						path="/estimate"
-						exact
-						component={() => <div>Free Estimate</div>}
+						path="/mobileappdev"
+						component={() => <div>Mobile App Development</div>}
+					/>
+					<Route
+						path="/websitedev"
+						component={() => <div>Website Development</div>}
 					/>
 				</Switch>
 			</BrowserRouter>

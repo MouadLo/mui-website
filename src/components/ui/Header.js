@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Tabs, Tab, Button } from '@material-ui/core';
+import {
+	AppBar,
+	Toolbar,
+	Tabs,
+	Tab,
+	Button,
+	Menu,
+	MenuItem,
+} from '@material-ui/core';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { Link } from 'react-router-dom';
 
@@ -48,14 +56,39 @@ const useStyles = makeStyles((theme) => ({
 		height: '45px',
 		color: 'white',
 	},
+	menu: {
+		backgroundColor: theme.palette.common.blue,
+		color: 'white',
+		borderRadius: '0px',
+	},
+	menuItem: {
+		...theme.typography.tab,
+		opacity: 0.7,
+		'&:hover': {
+			opacity: 1,
+		},
+	},
 }));
 export default function Header(props) {
 	const classes = useStyles();
 	const [value, setValue] = useState(0);
+	const [anchorEL, setAnchoreEl] = useState(null);
+	const [open, setOpen] = useState(false);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+
+	const handleClick = (e) => {
+		setAnchoreEl(e.currentTarget);
+		setOpen(true);
+	};
+
+	const handleClose = (e) => {
+		setAnchoreEl(null);
+		setOpen(false);
+	};
+
 	useEffect(() => {
 		if (window.location.pathname === '/' && value !== 0) {
 			setValue(0);
@@ -67,6 +100,8 @@ export default function Header(props) {
 			setValue(3);
 		} else if (window.location.pathname === '/contact' && value !== 4) {
 			setValue(4);
+		} else if (window.location.pathname === '/estimate' && value !== 5) {
+			setValue(5);
 		}
 	}, [value]);
 
@@ -97,8 +132,11 @@ export default function Header(props) {
 								label="Home"
 							/>
 							<Tab
+								aria-owns={anchorEL ? 'simple-menu' : undefined}
+								aria-haspopup={anchorEL ? 'true' : undefined}
 								className={classes.tab}
 								component={Link}
+								onMouseOver={(e) => handleClick(e)}
 								to="/services"
 								label="Services"
 							/>
@@ -127,9 +165,64 @@ export default function Header(props) {
 							variant="contained"
 							color="secondary"
 							to="/estimate"
+							onClick={() => setValue(5)}
 						>
 							Free Estimate
 						</Button>
+						<Menu
+							id="simple-menu"
+							anchorEl={anchorEL}
+							open={open}
+							onClose={handleClose}
+							classes={{ paper: classes.menu }}
+							MenuListProps={{ onMouseLeave: handleClose }}
+							elevation={0}
+						>
+							<MenuItem
+								to="/services"
+								classes={{ root: classes.menuItem }}
+								component={Link}
+								onClick={(e) => {
+									handleChange(e);
+									setValue(1);
+								}}
+							>
+								Services
+							</MenuItem>
+							<MenuItem
+								to="/customsoftware"
+								classes={{ root: classes.menuItem }}
+								component={Link}
+								onClick={(e) => {
+									handleChange(e);
+									setValue(1);
+								}}
+							>
+								Custom Software Development
+							</MenuItem>
+							<MenuItem
+								to="/mobileappdev"
+								classes={{ root: classes.menuItem }}
+								component={Link}
+								onClick={(e) => {
+									handleChange(e);
+									setValue(1);
+								}}
+							>
+								Mobile App Development
+							</MenuItem>
+							<MenuItem
+								to="/websitedev"
+								classes={{ root: classes.menuItem }}
+								component={Link}
+								onClick={(e) => {
+									handleChange(e);
+									setValue(1);
+								}}
+							>
+								Website Development
+							</MenuItem>
+						</Menu>
 					</Toolbar>
 				</AppBar>
 			</ElevationScroll>
