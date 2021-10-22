@@ -1,11 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Box, Container } from '@material-ui/core';
-import {
-	createTheme,
-	makeStyles,
-	ThemeProvider,
-} from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import Header from './ui/Header';
 
 import theme from './ui/Theme';

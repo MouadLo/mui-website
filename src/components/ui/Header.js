@@ -12,6 +12,9 @@ import {
 	useTheme,
 	SwipeableDrawer,
 	IconButton,
+	List,
+	ListItem,
+	ListItemText,
 } from '@material-ui/core';
 import { Menu as MenuIcon } from '@material-ui/icons';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
@@ -167,10 +170,11 @@ export default function Header(props) {
 					setValue(2);
 				}
 				break;
-			case 'about':
+			case '/about':
 				if (value !== 3) {
 					setValue(3);
 				}
+				break;
 			case '/contact':
 				if (value !== 4) {
 					setValue(4);
@@ -202,7 +206,7 @@ export default function Header(props) {
 			default:
 				break;
 		}
-	}, []);
+	}, [value]);
 
 	const tabs = (
 		<React.Fragment>
@@ -289,7 +293,62 @@ export default function Header(props) {
 				onClose={() => setOpenDrawer(false)}
 				onOpen={() => setOpenDrawer(true)}
 			>
-				Example drawer
+				<List disablePadding>
+					<ListItem
+						onClick={() => setOpenDrawer(false)}
+						divider
+						button
+						component={Link}
+						to="/"
+					>
+						<ListItemText disableTypography>Home</ListItemText>
+					</ListItem>
+					<ListItem
+						onClick={() => setOpenDrawer(false)}
+						divider
+						button
+						component={Link}
+						to="/services"
+					>
+						<ListItemText disableTypography>Services</ListItemText>
+					</ListItem>
+					<ListItem
+						onClick={() => setOpenDrawer(false)}
+						divider
+						button
+						component={Link}
+						to="/revolution"
+					>
+						<ListItemText disableTypography>The Revolution</ListItemText>
+					</ListItem>
+					<ListItem
+						onClick={() => setOpenDrawer(false)}
+						divider
+						button
+						component={Link}
+						to="/about"
+					>
+						<ListItemText disableTypography>About Us</ListItemText>
+					</ListItem>
+					<ListItem
+						onClick={() => setOpenDrawer(false)}
+						divider
+						button
+						component={Link}
+						to="/contact"
+					>
+						<ListItemText disableTypography>Contact Us</ListItemText>
+					</ListItem>
+					<ListItem
+						onClick={() => setOpenDrawer(false)}
+						divider
+						button
+						component={Link}
+						to="/estimate"
+					>
+						<ListItemText disableTypography>Free Estimate</ListItemText>
+					</ListItem>
+				</List>
 			</SwipeableDrawer>
 			<IconButton
 				className={classes.drawerIconContainer}
