@@ -110,11 +110,16 @@ const useStyles = makeStyles((theme) => ({
 		opacity: 0.7,
 	},
 	drawerItemSelected: {
-		opacity: 1,
+		'& .MuiListItemText-root': {
+			opacity: 1,
+		},
 	},
 	drawerItemEstimate: {
 		backgroundColor: theme.palette.common.orange,
 		color: 'black',
+	},
+	appbar: {
+		zIndex: theme.zIndex.modal + 1,
 	},
 }));
 export default function Header(props) {
@@ -190,20 +195,25 @@ export default function Header(props) {
 		{ name: 'Contact Us', link: '/contact', activeIndex: 4 },
 	];
 	useEffect(() => {
-		[...menuOptions, ...routes].forEach((route) => {
-			switch (window.location.pathname) {
-				case `${route.link}`:
-					if (value !== route.activeIndex) {
-						setValue(route.activeIndex);
-						if (route.selectedIndex && route.selectedIndex !== selectedIndex) {
-							setSelectedIndex(route.selectedIndex);
+		[...menuOptions, ...routes].forEach(
+			(route) => {
+				switch (window.location.pathname) {
+					case `${route.link}`:
+						if (value !== route.activeIndex) {
+							setValue(route.activeIndex);
+							if (
+								route.selectedIndex &&
+								route.selectedIndex !== selectedIndex
+							) {
+								setSelectedIndex(route.selectedIndex);
+							}
 						}
-					}
-					break;
-				default:
-					break;
+						break;
+					default:
+						break;
+				}
 			}
-		});
+		);
 	}, [value, menuOptions, selectedIndex, routes]);
 
 	const tabs = (
@@ -248,6 +258,7 @@ export default function Header(props) {
 				MenuListProps={{ onMouseLeave: handleClose }}
 				elevation={0}
 				keepMounted
+				style={{ zIndex: 1320 }}
 			>
 				{menuOptions.map((menuOption, i) => (
 					<MenuItem
@@ -279,6 +290,7 @@ export default function Header(props) {
 				onOpen={() => setOpenDrawer(true)}
 				classes={{ paper: classes.drawer }}
 			>
+				<div className={classes.toolbarMargin} />
 				<List disablePadding>
 					{routes.map((route, index) => {
 						return (
@@ -292,18 +304,10 @@ export default function Header(props) {
 								button
 								component={Link}
 								selected={value === route.activeIndex}
+								classes={{ selected: classes.drawerItemSelected }}
 								to={route.link}
 							>
-								<ListItemText
-									className={
-										value === route.activeIndex
-											? [classes.drawerItem, classes.drawerItemSelected].join(
-													' '
-											  )
-											: classes.drawerItem
-									}
-									disableTypography
-								>
+								<ListItemText className={classes.drawerItem} disableTypography>
 									{route.name}
 								</ListItemText>
 							</ListItem>
@@ -319,17 +323,14 @@ export default function Header(props) {
 						button
 						component={Link}
 						selected={value === 5}
+						classes={{
+							root: classes.drawerItemEstimate,
+							selected: classes.drawerItemSelected,
+						}}
 						to="/estimate"
 						className={classes.drawerItemEstimate}
 					>
-						<ListItemText
-							className={
-								value === 5
-									? [classes.drawerItem, classes.drawerItemSelected].join(' ')
-									: classes.drawerItem
-							}
-							disableTypography
-						>
+						<ListItemText className={classes.drawerItem} disableTypography>
 							Free Estimate
 						</ListItemText>
 					</ListItem>
@@ -347,7 +348,11 @@ export default function Header(props) {
 	return (
 		<React.Fragment>
 			<ElevationScroll {...props}>
-				<AppBar className={classes.root} position="fixed">
+				<AppBar
+					className={classes.root}
+					position="fixed"
+					className={classes.appbar}
+				>
 					<Toolbar disableGutters>
 						<Button
 							component={Link}
